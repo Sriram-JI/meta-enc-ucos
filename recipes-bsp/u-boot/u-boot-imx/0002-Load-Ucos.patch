@@ -1,0 +1,55 @@
+From f3dfb4dee35ce0390253a17d2afe09894fad607c Mon Sep 17 00:00:00 2001
+From: Mdfayaz003 <mohammedfayaz.munavar@jasmin-infotech.com>
+Date: Wed, 14 Sep 2022 12:52:38 +0530
+Subject: [PATCH] Load Ucos
+
+Signed-off-by: Mdfayaz003 <mohammedfayaz.munavar@jasmin-infotech.com>
+---
+ include/configs/mx6sxsabresd.h | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
+
+diff --git a/include/configs/mx6sxsabresd.h b/include/configs/mx6sxsabresd.h
+index 3060efe3e3..ef0e1a011c 100644
+--- a/include/configs/mx6sxsabresd.h
++++ b/include/configs/mx6sxsabresd.h
+@@ -80,6 +80,7 @@
+ 	TEE_ENV \
+ 	"script=boot.scr\0" \
+ 	"image=zImage\0" \
++	"ucosimg=zImage\0" \
+ 	"console=ttymxc0\0" \
+ 	"fdt_high=0xffffffff\0" \
+ 	"initrd_high=0xffffffff\0" \
+@@ -87,6 +88,7 @@
+ 	"fdt_addr=0x83000000\0" \
+ 	"tee_addr=0x84000000\0" \
+ 	"tee_file=uTee-6sxsdb\0" \
++	"ucosload=0x80000000\0" \
+ 	"boot_fdt=try\0" \
+ 	"ip_dyn=yes\0" \
+ 	"panel=Hannstar-XGA\0" \
+@@ -156,19 +158,13 @@
+ 		"if test $fdt_file = undefined; then " \
+ 			"setenv fdt_file " CONFIG_DEFAULT_DEVICE_TREE ".dtb; " \
+ 		"fi;\0" \
++	"ucosboot="\
++		"fatload mmc ${mmcdev}:${mmcpart} ${ucosload} ${ucosimg}; " \
++		"dcache off;" \
++		"go ${ucosload}\0" \
+ 
+ #define CONFIG_BOOTCOMMAND \
+-	   "run findfdt; " \
+-	   "mmc dev ${mmcdev}; if mmc rescan; then " \
+-		   "if run loadbootscript; then " \
+-			   "run bootscript; " \
+-		   "else " \
+-			   "if run loadimage; then " \
+-				   "run mmcboot; " \
+-			   "else run netboot; " \
+-			   "fi; " \
+-		   "fi; " \
+-	   "else run netboot; fi"
++	   "run ucosboot "
+ 
+ /* Miscellaneous configurable options */
+ 

@@ -1,0 +1,44 @@
+From 99df33df29ddd478af418e8754c92f169a2754e0 Mon Sep 17 00:00:00 2001
+From: Mdfayaz003 <mohammedfayaz.munavar@jasmin-infotech.com>
+Date: Wed, 14 Sep 2022 12:54:20 +0530
+Subject: [PATCH] Load Encrypted Ucos
+
+Signed-off-by: Mdfayaz003 <mohammedfayaz.munavar@jasmin-infotech.com>
+---
+ include/configs/mx6sxsabresd.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/include/configs/mx6sxsabresd.h b/include/configs/mx6sxsabresd.h
+index ef0e1a011c..6ea7c19fcb 100644
+--- a/include/configs/mx6sxsabresd.h
++++ b/include/configs/mx6sxsabresd.h
+@@ -89,6 +89,11 @@
+ 	"tee_addr=0x84000000\0" \
+ 	"tee_file=uTee-6sxsdb\0" \
+ 	"ucosload=0x80000000\0" \
++	"ucoslen=0x875970\0" \
++	"key=0x90000000\0" \
++	"iv=0x90100000\0" \
++	"keyfile=key.key\0" \
++	"eucoslen=0x875990\0" \
+ 	"boot_fdt=try\0" \
+ 	"ip_dyn=yes\0" \
+ 	"panel=Hannstar-XGA\0" \
+@@ -159,7 +162,16 @@
+ 			"setenv fdt_file " CONFIG_DEFAULT_DEVICE_TREE ".dtb; " \
+ 		"fi;\0" \
+ 	"ucosboot="\
++		"mw.b ${key} 0 0x40; " \
++		"mw.b ${iv} 0 0x40; " \
++		"fatload mmc ${mmcdev}:${mmcpart} ${key} ${keyfile}; " \
+-		"fatload mmc ${mmcdev}:${mmcpart} ${ucosload} ${ucosimg}; " \
++		"fatload mmc ${mmcdev}:${mmcpart} ${ucosload} ${ucosimg}; " \
++		"echo Decrypting UCOS ....; " \
++		"aes.256 dec ${key} ${iv} ${ucosload} ${ucosload} ${eucoslen}; " \
++		"echo Reclabriting Decrypted UCOS; "\
++		"cp.b 0x80000010 ${ucosload} ${ucoslen}; "\
++		"echo Authenticate UCOS...; "\
+ 		"dcache off;" \
++		"hab_auth_img ${ucosload} ${ucoslen} 0x874000; "\
+ 		"go ${ucosload}\0" \
+ 

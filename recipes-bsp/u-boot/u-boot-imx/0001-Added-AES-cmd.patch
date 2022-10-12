@@ -1,0 +1,48 @@
+From b72df9d45f8b1d87c77cbfa979582d8df55d40c3 Mon Sep 17 00:00:00 2001
+From: Mdfayaz003 <mohammedfayaz.munavar@jasmin-infotech.com>
+Date: Wed, 14 Sep 2022 12:49:58 +0530
+Subject: [PATCH] Added AES cmd
+
+Signed-off-by: Mdfayaz003 <mohammedfayaz.munavar@jasmin-infotech.com>
+---
+ configs/mx6sxsabresd_defconfig       | 4 ++++
+ configs/mx6sxsabresd_optee_defconfig | 4 ++++
+ configs/mx6sxsabresd_qspi2_defconfig | 4 ++++
+ 3 files changed, 12 insertions(+)
+
+diff --git a/configs/mx6sxsabresd_defconfig b/configs/mx6sxsabresd_defconfig
+index 8cf6a0e225..1317b773bf 100644
+--- a/configs/mx6sxsabresd_defconfig
++++ b/configs/mx6sxsabresd_defconfig
+@@ -108,3 +108,7 @@ CONFIG_CMD_MD5SUM=y
+ CONFIG_MD5SUM_VERIFY=y
+ #enabling tftp put
+ CONFIG_CMD_TFTPPUT=y
++
++#Enable AES command
++CONFIG_CMD_AES=y
++CONFIG_SYS_LONGHELP=y
+diff --git a/configs/mx6sxsabresd_optee_defconfig b/configs/mx6sxsabresd_optee_defconfig
+index cbdd965bdb..c457829149 100644
+--- a/configs/mx6sxsabresd_optee_defconfig
++++ b/configs/mx6sxsabresd_optee_defconfig
+@@ -109,3 +109,7 @@ CONFIG_CMD_MD5SUM=y
+ CONFIG_MD5SUM_VERIFY=y
+ #enabling tftp put
+ CONFIG_CMD_TFTPPUT=y
++
++#Enable AES command
++CONFIG_CMD_AES=y
++CONFIG_SYS_LONGHELP=y
+diff --git a/configs/mx6sxsabresd_qspi2_defconfig b/configs/mx6sxsabresd_qspi2_defconfig
+index 65b0763e85..aceda4456a 100644
+--- a/configs/mx6sxsabresd_qspi2_defconfig
++++ b/configs/mx6sxsabresd_qspi2_defconfig
+@@ -112,3 +112,7 @@ CONFIG_CMD_MD5SUM=y
+ CONFIG_MD5SUM_VERIFY=y
+ #enabling tftp put
+ CONFIG_CMD_TFTPPUT=y
++
++#Enable AES command
++CONFIG_CMD_AES=y
++CONFIG_SYS_LONGHELP=y
